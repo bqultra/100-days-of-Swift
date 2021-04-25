@@ -52,3 +52,91 @@ func getUser() -> (first: String, last: String) {
 
 let user = getUser()
 print(user.first)
+
+
+//Parameter labels - we can use parameter labels inside our function to refer to it
+func squared(number: Int) -> Int {
+    return number * number
+}
+
+let resulted = squared(number: 8)
+
+//We can use two labels - one to use externally and one internally
+func sayHello(to name: String) {
+    print("Hello, \(name)!") //internally - name
+}
+
+sayHello(to: "Taylor") //externally - to
+
+
+//Omitting parameter labels - we can leave our parameter label by using underscore _
+func greet(_ person: String) {
+    print("Hello, \(person)!")
+}
+
+greet("Taylor")
+
+
+//Default parameters - we can set our parameters default value by using = sign after their type
+func greet2(_ person: String, nicely: Bool = true) {
+    if nicely == true {
+        print("Hello, \(person)!")
+    } else {
+        print("Oh no, it's \(person) again...")
+    }
+}
+
+greet2("Taylor")
+greet2("Taylor", nicely: false)
+
+
+//Variadic functions - we can pass many parameters when calling a function and print all of them separated by a space; We make this by writing ... after parameter type telling function there will be many parameters
+
+func squares(numbers: Int...) {
+    for number in numbers {
+        print("\(number) squared is \(number * number)")
+    }
+}
+
+squares(numbers: 1, 2, 3, 4, 5)
+
+
+//Throwing functions - we can throw errors when function fail by marking them as throws before return type and using throw keyword when something goes wrong; It's based on Swift's existing Error types.
+
+enum PasswordError: Error { //enum describes Error we can throw
+    case obvious
+}
+
+func checkPassword(_ password: String) throws -> Bool { //throws before returned type
+    if password == "password" {
+        throw PasswordError.obvious //throw when something goes wrong
+    }
+
+    return true
+}
+
+
+//Running throwing functions - we run them by using do,try and catch keywords
+
+//do - starts a section of code that might cause a problem
+//try - before every func that might throw error
+//catch - lets handle errors
+
+//If any errors are thrown inside "do" we move on to catch block
+do {
+    try checkPassword("password")
+    print("That password is good!")
+} catch {
+    print("You can't use that password.")
+}
+
+
+//inout parameters - every parameter passed into func is a constant so we can't change it. We can change that by using inout keyword before type of a parameter
+
+func doubleInPlace(number: inout Int) {
+    number *= 2
+}
+
+//First we need to make an integer; we are passing parameter to func by using & sign
+var myNum = 10
+doubleInPlace(number: &myNum)
