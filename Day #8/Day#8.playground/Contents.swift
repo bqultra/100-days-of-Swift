@@ -31,3 +31,20 @@ struct Sports {
 
 let chessBoxing = Sports(name: "Chessboxing", isOlympicSport: false)
 print(chessBoxing.olympicStatus)
+
+
+//Property observers - they let us run code before or after any property changes; we simply use willSet or didSet
+
+struct Progress {
+    var task: String
+    var amount: Int {
+        didSet {
+            print("\(task) is now \(amount)% complete") //it will print statement every time we set amount
+        }
+    }
+}
+
+var progress = Progress(task: "Loading data", amount: 0)
+progress.amount = 30
+progress.amount = 80
+progress.amount = 100
